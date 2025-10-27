@@ -117,6 +117,17 @@ type Pods struct {
 	HostIP    string   `json:"host_ip"`
 }
 
+type ServiceDetail struct {
+	Name        string  `json:"name"`
+	IsActive    bool    `json:"is_active"`
+	PID         int32   `json:"pid"`
+	Memory      float64 `json:"memory"`
+	MemoryUnit  string  `json:"memory_unit"`
+	CPUNS       float64 `json:"cpu_ns"`
+	SubState    string  `json:"sub_state"`
+	Description string  `json:"description"`
+}
+
 func GetNodes() []Nodes {
 	return runJSONCommand[Nodes](CmdGetNodes)
 }
@@ -127,6 +138,28 @@ func GetPodKinds() []PodKinds {
 
 func GetPods() []Pods {
 	return runJSONCommand[Pods](CmdGetPods)
+}
+
+func GetServices() []string {
+	return runJSONCommand[string](CmdGetServices)
+}
+
+func GetInfoServices() []ServiceDetail {
+	services := make([]ServiceDetail, 0)
+	for i, v := range GetServices() {
+		var output ServiceDetail
+		cmdText := fmt.Sprintf(CmdGetInfoServices, v)
+		cmd := exec.Command("bash", "-c", cmdText)
+		out, err := cmd.Output()
+		if err != nil {
+			log.Printf("[ERROR] %v running command %q: %v\n", i, cmdText, err)
+			return services
+		}
+		json.Unmarshal(out, &output)
+		services = append(services, output)
+	}
+	return services
+
 }
 
 func runJSONCommand[T any](cmdStr string) []T {

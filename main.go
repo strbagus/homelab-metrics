@@ -79,6 +79,14 @@ func main() {
 			"datetime": time.Now().UTC().Format(time.RFC3339),
 		})
 	})
+	v1.Get("/services", func(c *fiber.Ctx) error {
+		services := utils.GetInfoServices()
+		return c.Status(fiber.StatusOK).JSON(fiber.Map{
+			"title":    "Homelab Systemd Services",
+			"data":     services,
+			"datetime": time.Now().UTC().Format(time.RFC3339),
+		})
+	})
 	v1.Get("/ws/metrics", websocket.New(func(c *websocket.Conn) {
 		defer c.Close()
 		log.Println("[INFO] Client connected to metrics ws")
