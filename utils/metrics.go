@@ -117,15 +117,15 @@ type Pods struct {
 	HostIP    string   `json:"host_ip"`
 }
 
-func GetNodes() any {
+func GetNodes() []Nodes {
 	return runJSONCommand[Nodes](CmdGetNodes)
 }
 
-func GetPodKinds() any {
+func GetPodKinds() []PodKinds {
 	return runJSONCommand[PodKinds](CmdGetPodKinds)
 }
 
-func GetPods() any {
+func GetPods() []Pods {
 	return runJSONCommand[Pods](CmdGetPods)
 }
 
