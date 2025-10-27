@@ -7,7 +7,14 @@ import (
 )
 
 func CalcTo(w float64, f string, t string) float64 {
+	if f == "" {
+		f = "B"
+	}
+	if t == "" {
+		t = "B"
+	}
 	sr := map[string]float64{
+		"B":  0,
 		"Ki": 1,
 		"Mi": 2,
 		"Gi": 3,
