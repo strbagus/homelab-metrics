@@ -51,7 +51,7 @@ func main() {
 		metrics := utils.GetMetric()
 		return c.Status(fiber.StatusOK).JSON(fiber.Map{
 			"title":    "Homelab Metric",
-			"nodes":    metrics,
+			"data":     metrics,
 			"datetime": time.Now().UTC().Format(time.RFC3339),
 		})
 	})
@@ -59,7 +59,7 @@ func main() {
 		nodes := utils.GetNodes()
 		return c.Status(fiber.StatusOK).JSON(fiber.Map{
 			"title":    "Homelab Nodes",
-			"nodes":    nodes,
+			"data":     nodes,
 			"datetime": time.Now().UTC().Format(time.RFC3339),
 		})
 	})
@@ -67,7 +67,7 @@ func main() {
 		pods := utils.GetPods()
 		return c.Status(fiber.StatusOK).JSON(fiber.Map{
 			"title":    "Homelab Pods",
-			"nodes":    pods,
+			"data":     pods,
 			"datetime": time.Now().UTC().Format(time.RFC3339),
 		})
 	})
@@ -75,7 +75,7 @@ func main() {
 		kinds := utils.GetPodKinds()
 		return c.Status(fiber.StatusOK).JSON(fiber.Map{
 			"title":    "Homelab Kinds",
-			"nodes":    kinds,
+			"data":     kinds,
 			"datetime": time.Now().UTC().Format(time.RFC3339),
 		})
 	})
