@@ -143,6 +143,16 @@ func GetPods() []Pods {
 func GetServices() []string {
 	return runJSONCommand[string](CmdGetServices)
 }
+func GetHost() string {
+	var output string
+	cmd := exec.Command("hostname")
+	out, err := cmd.Output()
+	if err != nil {
+		log.Printf("[ERROR] running command: %v", err)
+	}
+	output = strings.ReplaceAll(string(out), "\n", "")
+	return output
+}
 
 func GetInfoServices() []ServiceDetail {
 	services := make([]ServiceDetail, 0)

@@ -41,9 +41,11 @@ func GetPodKinds(c *fiber.Ctx) error {
 }
 func GetServices(c *fiber.Ctx) error {
 	services := utils.GetInfoServices()
+	host := utils.GetHost()
 	return c.Status(fiber.StatusOK).JSON(fiber.Map{
 		"title":    "Homelab Systemd Services",
 		"data":     services,
+		"host":     host,
 		"datetime": time.Now().UTC().Format(time.RFC3339),
 	})
 }
