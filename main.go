@@ -39,7 +39,7 @@ func main() {
 	app.Use(cors.New(cors.Config{
 		AllowOrigins:     os.Getenv("CORS_ALLOWED_ORIGIN"),
 		AllowHeaders:     "Origin, Content-Type, Accept",
-		AllowMethods:     "GET",
+		AllowMethods:     "GET, POST",
 		AllowCredentials: true,
 	}))
 
@@ -52,8 +52,10 @@ func main() {
 	v1 := base.Group("/v1", middlewares.JWTMiddleware())
 	v1.Get("/top", controllers.GetTop)
 	v1.Get("/nodes", controllers.GetNodes)
+	v1.Get("/nodes", controllers.GetNodes)
 	v1.Get("/kinds", controllers.GetPodKinds)
 	v1.Get("/pods", controllers.GetPods)
+	v1.Post("/detail", controllers.GetDetail)
 	v1.Get("/services", controllers.GetServices)
 
 	listenPort := fmt.Sprintf(":%v", os.Getenv("SERVER_PORT"))

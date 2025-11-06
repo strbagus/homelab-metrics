@@ -143,6 +143,11 @@ func GetPods() []Pods {
 func GetServices() []string {
 	return runJSONCommand[string](CmdGetServices)
 }
+
+func GetDetail(name string) any {
+	cmd := fmt.Sprintf(CmdGetDetail, name)
+	return runJSONCommandObject[any](cmd)
+}
 func GetHost() string {
 	var output string
 	cmd := exec.Command("hostname")
@@ -174,6 +179,23 @@ func GetInfoServices() []ServiceDetail {
 
 func runJSONCommand[T any](cmdStr string) []T {
 	result := make([]T, 0)
+
+	cmd := exec.Command("bash", "-c", cmdStr)
+	out, err := cmd.Output()
+	if err != nil {
+		log.Printf("[ERROR] running command %q: %v\n", cmdStr, err)
+		return result
+	}
+
+	if err := json.Unmarshal(out, &result); err != nil {
+		log.Printf("[ERROR] unmarshalling JSON from %q: %v\n", cmdStr, err)
+	}
+
+	return result
+}
+
+func runJSONCommandObject[T any](cmdStr string) T {
+	var result T
 
 	cmd := exec.Command("bash", "-c", cmdStr)
 	out, err := cmd.Output()

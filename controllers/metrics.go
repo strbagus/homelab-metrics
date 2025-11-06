@@ -1,6 +1,7 @@
 package controllers
 
 import (
+	"fmt"
 	"time"
 
 	"github.com/gofiber/fiber/v2"
@@ -47,5 +48,26 @@ func GetServices(c *fiber.Ctx) error {
 		"data":     services,
 		"host":     host,
 		"datetime": time.Now().UTC().Format(time.RFC3339),
+	})
+}
+
+type RequestDetail struct {
+	Name string `json:"name"`
+}
+
+func GetDetail(c *fiber.Ctx) error {
+	var data RequestDetail
+	err := c.BodyParser(&data)
+	if err != nil {
+		return c.Status(fiber.StatusBadRequest).JSON(fiber.Map{
+			"message": "Bad Request",
+			"error":   err,
+		})
+	}
+	detail := utils.GetDetail(data.Name)
+	name := fmt.Sprintf("Detail %v", data.Name)
+	return c.Status(fiber.StatusOK).JSON(fiber.Map{
+		"title": name,
+		"data":  detail,
 	})
 }
