@@ -216,6 +216,29 @@ func AddDiskPing(body m.DiskType) string {
 	return "Add new disk data success."
 }
 
+const resourcesFilePath = "db/resources-mapping.json"
+
+func GetResources() []m.ResourcesCategoryType {
+	data := make([]m.ResourcesCategoryType, 0)
+	file, err := os.ReadFile(resourcesFilePath)
+	if err == nil {
+		json.Unmarshal(file, &data)
+	}
+	return data
+}
+
+func GetResourcesCategory(slug string) []m.ResourcesKindType {
+	list := GetResources()
+	res := ArrFind(list, func(d m.ResourcesCategoryType) bool {
+		return d.Slug == slug
+	})
+	types := strings.Join(res.Types, ",")
+	cmd := fmt.Sprintf(CmdGetResources, types)
+
+	output := runJSONCommand[m.ResourcesKindType](cmd)
+	return output
+}
+
 func runJSONCommand[T any](cmdStr string) []T {
 	result := make([]T, 0)
 

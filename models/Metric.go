@@ -9,3 +9,16 @@ type DiskType struct {
 	Mountpoint string `json:"mountpoint"`
 	Hostname   string `json:"hostname"`
 }
+
+type ResourcesCategoryType struct {
+	Category string   `json:"category"`
+	Slug     string   `json:"slug"`
+	Types    []string `json:"types"`
+}
+
+type ResourcesKindType struct {
+	ID        string `json:"id"`
+	Namespace string `json:"namespace"`
+	Name      string `json:"name"`
+	Kind      string `json:"kind"`
+}

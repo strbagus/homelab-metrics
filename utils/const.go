@@ -11,3 +11,5 @@ var CmdGetServices = `systemctl list-dependencies mygroup.target --plain --no-pa
 var CmdGetInfoServices = `systemctl show %v -p Id -p Description -p ActiveState -p SubState -p ExecMainPID -p MemoryCurrent -p CPUUsageNSec --no-pager | jq --slurp --raw-input 'split("\n") | map(select(. != "") | split("=") | {"key": .[0], "value": (.[1:] | join("="))}) | from_entries | { name: .Id, is_active: (.ActiveState=="active"), pid: (.ExecMainPID | tonumber), memory: (try (.MemoryCurrent | tonumber) catch 0), memory_unit: "", cpu_ns: (try (.CPUUsageNSec | tonumber) catch 0), sub_state: .SubState, description: .Description}'`
 
 var CmdGetDetail = `sudo kubectl get %v -o json`
+
+var CmdGetResources = `sudo kubectl get %v -A -o json | jq '.items | map(select(.metadata.namespace != "kube-system") | {kind: .kind, uid: .metadata.uid, namespace: .metadata.namespace, name: .metadata.name })'`

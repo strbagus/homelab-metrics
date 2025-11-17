@@ -1,0 +1,83 @@
+[
+  {
+    "category": "Workloads",
+    "slug": "workloads",
+    "types": [
+      "pods",
+      "replicasets",
+      "deployments",
+      "statefulsets",
+      "daemonsets",
+      "jobs",
+      "cronjobs"
+    ]
+  },
+  {
+    "category": "Networking",
+    "slug": "networking",
+    "types": [
+      "services",
+      "ingresses",
+      "networkpolicies",
+      "endpoints",
+      "endpointslices"
+    ]
+  },
+  {
+    "category": "Configuration & Secrets",
+    "slug": "configuration-secrets",
+    "types": [
+      "configmaps",
+      "secrets",
+      "serviceaccounts"
+    ]
+  },
+  {
+    "category": "Storage",
+    "slug": "storage",
+    "types": [
+      "persistentvolumeclaims",
+      "persistentvolumes",
+      "storageclasses"
+    ]
+  },
+  {
+    "category": "RBAC & Security",
+    "slug": "rbac-security",
+    "types": [
+      "roles",
+      "rolebindings",
+      "clusterroles",
+      "clusterrolebindings"
+    ]
+  },
+  {
+    "category": "Cluster Resources",
+    "slug": "cluster-resources",
+    "types": [
+      "nodes",
+      "namespaces",
+      "customresourcedefinitions",
+      "apiservices"
+    ]
+  },
+  {
+    "category": "Autoscaling & Scheduling",
+    "slug": "autoscaling-scheduling",
+    "types": [
+      "horizontalpodautoscalers",
+      "verticalpodautoscalers",
+      "poddisruptionbudgets",
+      "priorityclasses"
+    ]
+  },
+  {
+    "category": "Monitoring & Metadata",
+    "slug": "monitoring-metadata",
+    "types": [
+      "events",
+      "limitranges",
+      "resourcequotas"
+    ]
+  }
+]

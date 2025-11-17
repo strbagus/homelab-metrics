@@ -9,3 +9,13 @@ func ArrFilter[T any](arr []T, test func(T) bool) []T {
 	}
 	return result
 }
+
+func ArrFind[T any](arr []T, test func(T) bool) T {
+	var result T
+	for _, item := range arr {
+		if test(item) {
+			result = item
+		}
+	}
+	return result
+}

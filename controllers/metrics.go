@@ -94,6 +94,23 @@ func GetDisks(c *fiber.Ctx) error {
 	return c.Status(fiber.StatusOK).JSON(fiber.Map{
 		"title":    "Homelab Disk Usage",
 		"data":     disks,
-		"datetime": time.Now().UTC().Format(time.RFC3339),
+	})
+}
+
+func GetResources(c *fiber.Ctx) error {
+	resources := utils.GetResources()
+	return c.Status(fiber.StatusOK).JSON(fiber.Map{
+		"title": "Homelab Get Resources",
+		"data": resources,
+	})
+}
+
+func GetResourcesCategory(c *fiber.Ctx) error {
+	category := c.Params("category")
+	resources := utils.GetResourcesCategory(category)
+	title := fmt.Sprintf("Homelab Get Resources Category %s", category)
+	return c.Status(fiber.StatusOK).JSON(fiber.Map{
+		"title": title,
+		"data": resources,
 	})
 }

@@ -59,6 +59,8 @@ func main() {
 	v1.Post("/detail", controllers.GetDetail)
 	v1.Get("/services", controllers.GetServices)
 	v1.Get("/disks", controllers.GetDisks)
+	v1.Get("/resources", controllers.GetResources)
+	v1.Get("/resources/:category", controllers.GetResourcesCategory)
 
 	listenPort := fmt.Sprintf(":%v", os.Getenv("SERVER_PORT"))
 	log.Fatal(app.Listen(listenPort))
