@@ -58,6 +58,7 @@ func main() {
 	v1.Get("/pods", controllers.GetPods)
 	v1.Post("/detail", controllers.GetDetail)
 	v1.Get("/services", controllers.GetServices)
+	v1.Get("/disks", controllers.GetDisks)
 
 	listenPort := fmt.Sprintf(":%v", os.Getenv("SERVER_PORT"))
 	log.Fatal(app.Listen(listenPort))

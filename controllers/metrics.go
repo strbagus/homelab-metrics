@@ -88,3 +88,12 @@ func PingDisk(c *fiber.Ctx) error {
 		"message": res,
 	})
 }
+
+func GetDisks(c *fiber.Ctx) error {
+	disks := utils.GetDisk()
+	return c.Status(fiber.StatusOK).JSON(fiber.Map{
+		"title":    "Homelab Disk Usage",
+		"data":     disks,
+		"datetime": time.Now().UTC().Format(time.RFC3339),
+	})
+}
