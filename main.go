@@ -43,12 +43,13 @@ func main() {
 		AllowCredentials: true,
 	}))
 
+	ping := app.Group("/ping")
+	ping.Post("/disk", controllers.PingDisk)
 	base := app.Group(os.Getenv("BASE_URL"))
 	base.Get("/", func(c *fiber.Ctx) error {
 		return c.SendString("Halo Dunia!")
 	})
 	base.Get("/ws/top", websocket.New(controllers.WSTop))
-
 	v1 := base.Group("/v1", middlewares.JWTMiddleware())
 	v1.Get("/top", controllers.GetTop)
 	v1.Get("/nodes", controllers.GetNodes)

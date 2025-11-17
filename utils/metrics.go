@@ -5,10 +5,13 @@ import (
 	"encoding/json"
 	"fmt"
 	"log"
+	"os"
 	"os/exec"
 	"regexp"
 	"strconv"
 	"strings"
+
+	m "github.com/strbagus/homelab-metrics/models"
 )
 
 type NodeMetric struct {
@@ -175,6 +178,40 @@ func GetInfoServices() []ServiceDetail {
 	}
 	return services
 
+}
+
+func AddDiskPing(body m.DiskType) string {
+	data := body
+	const filePath = "db/disk.json"
+
+	var arr []m.DiskType
+	file, err := os.ReadFile(filePath)
+	if err == nil {
+		json.Unmarshal(file, &arr)
+
+	}
+
+	hostname := data.Hostname
+
+	newArr := ArrFilter(arr, func(d m.DiskType) bool {
+		return d.Hostname != hostname
+	})
+	/* newArr = make([]m.DiskType, 0)
+	for _, item := range arr {
+		if item.Hostname != hostname {
+			newArr = append(newArr, item)
+		}
+	} */
+	newArr = append(newArr, data)
+
+	output, _ := json.MarshalIndent(newArr, "", "  ")
+	fmt.Printf("anu: %v\n", newArr)
+	// os.WriteFile(filePath, output, 0644)
+	err = os.WriteFile(filePath, output, 0644)
+	if err != nil {
+		fmt.Println("Error writing file:", err)
+	}
+	return "Add new disk data success."
 }
 
 func runJSONCommand[T any](cmdStr string) []T {

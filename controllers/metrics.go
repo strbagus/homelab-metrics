@@ -5,6 +5,7 @@ import (
 	"time"
 
 	"github.com/gofiber/fiber/v2"
+	m "github.com/strbagus/homelab-metrics/models"
 	"github.com/strbagus/homelab-metrics/utils"
 )
 
@@ -69,5 +70,21 @@ func GetDetail(c *fiber.Ctx) error {
 	return c.Status(fiber.StatusOK).JSON(fiber.Map{
 		"title": name,
 		"data":  detail,
+	})
+}
+
+func PingDisk(c *fiber.Ctx) error {
+	var data m.DiskType
+	err := c.BodyParser(&data)
+
+	res := utils.AddDiskPing(data)
+	if err != nil {
+		return c.Status(fiber.StatusBadRequest).JSON(fiber.Map{
+			"message": "Bad Request",
+			"err":     err,
+		})
+	}
+	return c.Status(fiber.StatusOK).JSON(fiber.Map{
+		"message": res,
 	})
 }
