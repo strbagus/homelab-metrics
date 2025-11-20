@@ -4,7 +4,7 @@ var CmdGetNodes = `kubectl get nodes -o json | jq '.items | map({name: .metadata
 
 var CmdGetPodKinds = `kubectl get all -A -o json | jq '.items | map(select(.metadata.namespace != "kube-system") | {kind: .kind}) | group_by(.kind) | map({ kind: .[0].kind, count: length})'`
 
-var CmdGetPods = `kubectl get all -A -o json | jq '.items | map(select(.metadata.namespace != "kube-system") | {kind: .kind, uid: .metadata.uid, namespace: .metadata.namespace, name: .metadata.name, app: .metadata.labels.app, ref: .metadata.ownerReferences, status: .spec.phase, node: .spec.nodeName, subdomain: .spec.subdomain, host: .spec.hostname, priority: .spec.priority, status: .status.phase, host_ip: .status.hostIP })'`
+var CmdGetPods = `kubectl get pod -A -o json | jq '.items | map(select(.metadata.namespace != "kube-system") | {kind: .kind, uid: .metadata.uid, namespace: .metadata.namespace, name: .metadata.name, app: .metadata.labels.app, ref: .metadata.ownerReferences, status: .spec.phase, node: .spec.nodeName, subdomain: .spec.subdomain, host: .spec.hostname, priority: .spec.priority, status: .status.phase, host_ip: .status.hostIP })'`
 
 var CmdGetServices = `systemctl list-dependencies mygroup.target --plain --no-pager --type=service | tail -n +2 | xargs | jq --raw-input '. | split(" ")'`
 
@@ -12,4 +12,4 @@ var CmdGetInfoServices = `systemctl show %v -p Id -p Description -p ActiveState 
 
 var CmdGetDetail = `kubectl get %v -o json`
 
-var CmdGetResources = `kubectl get %v -A -o json | jq '.items | map(select(.metadata.namespace != "kube-system") | {kind: .kind, uid: .metadata.uid, namespace: .metadata.namespace, name: .metadata.name })'`
+var CmdGetResources = `sudo kubectl get %v -A -o json | jq '.items | map(select(.metadata.namespace != "kube-system") | {kind: .kind, uid: .metadata.uid, namespace: .metadata.namespace, name: .metadata.name })'`
